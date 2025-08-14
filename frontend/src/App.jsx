@@ -18,6 +18,8 @@ function App() {
   const [copySuccess, setCopySuccess] = useState("");
   const [users, setUsers] = useState([]);
   const [typing, setTyping] = useState("");
+  const [output, setOutput] = useState("");
+  const [version, setVersion] = useState("*");
 
   useEffect( () => {
     socket.on("userJoined", (users) => {
@@ -39,11 +41,16 @@ function App() {
       setLanguage(newLanguage);
     })
 
+    socket.on("codeResponse", (response) => {
+      setOutput(response.run.output);
+    })
+
     return () => {
       socket.off("userJoined");
       socket.off("codeUpdate");
       socket.off("userTyping");
       socket.off("languageUpdate");
+      socket.off("codeResponse");
     }
   }, [])
 
@@ -93,6 +100,16 @@ function App() {
     const newLanguage = e.target.value;
     setLanguage(newLanguage);
     socket.emit("languageChange", {roomId, language: newLanguage});
+  }
+
+  //Run code
+  const runCode = () => {
+    socket.emit("compileCode", {
+      code,
+      roomId,
+      language,
+      version
+    })
   }
 
   if(!joined){
@@ -154,7 +171,7 @@ function App() {
     
     <div className="editor-wrapper">
       <Editor 
-        height={"100%"} 
+        height={"60vh"} 
         defaultLanguage = {language} 
         language={language} 
         value={code}
@@ -167,6 +184,9 @@ function App() {
           }
         }
       />
+      
+      <button className='run-btn' onClick={runCode}>Run</button>
+      <textarea className='output-console' value={output} readOnly placeholder='Output Will appear here...'></textarea>
     </div>
 
   </div>
