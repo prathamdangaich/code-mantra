@@ -4,7 +4,7 @@ import io from 'socket.io-client'
 import { useState, useEffect, useMemo } from 'react';
 import Editor from '@monaco-editor/react';
 
-const socket = io('http://localhost:3000');
+const socket = io('https://code-mantra-ylgq.onrender.com');
 
 
 
