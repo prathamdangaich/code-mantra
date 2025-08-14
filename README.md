@@ -8,6 +8,7 @@ It’s designed for **doubt resolution**, **pair programming**, **interview prep
 ## Features  
 
 - **Real-time Code Synchronization** – Any code changes are instantly reflected for all users in the same room.
+- **Compiler support** - Anyone inside the same room and compile the code.
 - **Multiple Language Support** – Switch between JavaScript, Python, C++, and Java.
 - **Room-based Collaboration** – Join or create a room using a unique Room ID.
 - **User Presence Tracking** – See who is in the room in real time.
