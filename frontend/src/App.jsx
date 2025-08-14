@@ -3,8 +3,9 @@ import './App.css';
 import io from 'socket.io-client'
 import { useState, useEffect, useMemo } from 'react';
 import Editor from '@monaco-editor/react';
+import {v4 as uuid} from 'uuid'
 
-const socket = io('https://code-mantra-ylgq.onrender.com');
+const socket = io('http://localhost:3000');
 
 
 
@@ -112,6 +113,13 @@ function App() {
     })
   }
 
+  //Using 'uuid' to generate unique room id
+  const createRoomId = () => {
+    const roomId = uuid()
+    setRoomId(roomId)
+  }
+
+
   if(!joined){
     return(
       <div className="join-container">
@@ -131,7 +139,12 @@ function App() {
           onChange={(e) => setUserName(e.target.value)}
           />
 
-          <button onClick={joinRoom}>Join Room</button>
+          <button onClick={joinRoom} className='join-room-button'>Join Room</button>
+
+          <div className='generate-room'>
+            If don't have room Id
+            <button className='generate-room-button' onClick={createRoomId}>Create Room</button>
+          </div>
         </div>
       </div>
     )

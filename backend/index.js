@@ -5,26 +5,27 @@ import path from "path";
 import { version } from "os";
 import axios from "axios";
 
+
 const app = express();
 
 const server = http.createServer(app);
 
 //Save time while opening again
-const url = `https://code-mantra-ylgq.onrender.com`;
-const interval = 30000;
+// const url = `https://code-mantra-ylgq.onrender.com`;
+// const interval = 30000;
 
-function reloadWebsite() {
-  axios
-    .get(url)
-    .then((response) => {
-      console.log("website reloded");
-    })
-    .catch((error) => {
-      console.error(`Error : ${error.message}`);
-    });
-}
+// function reloadWebsite() {
+//   axios
+//     .get(url)
+//     .then((response) => {
+//       console.log("website reloded");
+//     })
+//     .catch((error) => {
+//       console.error(`Error : ${error.message}`);
+//     });
+// }
 
-setInterval(reloadWebsite, interval);
+// setInterval(reloadWebsite, interval);
 
 
 
@@ -46,8 +47,8 @@ io.on("connection", (socket) => {
     socket.on("join", ({roomId, userName}) => {
         if(currentRoom){
             socket.leave(currentRoom);
-            rooms.get(currentRoom).delete(currentUser);
-            io.to(currentRoom).emit("userJoined", Array.from(rooms.get(currentRoom)))
+            rooms.get(currentRoom).users.delete(currentUser);
+            io.to(currentRoom).emit("userJoined", Array.from(rooms.get(currentRoom).users))
         }
 
         currentRoom = roomId;
@@ -56,23 +57,28 @@ io.on("connection", (socket) => {
         socket.join(roomId);
 
         if(!rooms.has(roomId)){
-            rooms.set(roomId, new Set());
+            rooms.set(roomId, {users: new Set(), code: "//start coding here"});
         }
 
-        rooms.get(roomId).add(userName);
+        rooms.get(roomId).users.add(userName);
 
-        io.to(roomId).emit("userJoined", Array.from(rooms.get(currentRoom)));
+        socket.emit("codeUpdate", rooms.get(roomId).code);
+
+        io.to(roomId).emit("userJoined", Array.from(rooms.get(currentRoom).users));
     })
 
     socket.on("codeChange", ({ roomId,code }) => {
+        if(rooms.has(roomId)){
+            rooms.get(roomId).code = code;
+        }
         socket.to(roomId).emit("codeUpdate", code)
     })
 
 
     socket.on("leaveRoom", () => {
         if(currentRoom && currentUser){
-            rooms.get(currentRoom).delete(currentUser);
-            io.to(currentRoom).emit("userJoined", Array.from(rooms.get(currentRoom)));
+            rooms.get(currentRoom).users.delete(currentUser);
+            io.to(currentRoom).emit("userJoined", Array.from(rooms.get(currentRoom).users));
 
             socket.leave(currentRoom)
             currentRoom = null;
@@ -110,8 +116,8 @@ io.on("connection", (socket) => {
 
     socket.on("disconnect", () => {
         if(currentRoom && currentUser){
-            rooms.get(currentRoom).delete(currentUser);
-            io.to(currentRoom).emit("userJoined", Array.from(rooms.get(currentRoom)));
+            rooms.get(currentRoom).users.delete(currentUser);
+            io.to(currentRoom).emit("userJoined", Array.from(rooms.get(currentRoom).users));
         }
         console.log(`User disconnected!!`);
     })
