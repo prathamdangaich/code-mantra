@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 
 //Save time while opening again
-const url = `https://code-mantra-ylgq.onrender.com`;
+const url = `https://code-mantra-ylgq.onrender.com/`;
 const interval = 30000;
 
 function reloadWebsite() {
