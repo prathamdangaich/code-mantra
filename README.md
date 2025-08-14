@@ -1,6 +1,6 @@
-# Code Collab  
+# Code Mantra  
 
-**Code Collab** is a real-time collaborative code editor that enables multiple users to work together on the same code, in the same editor, at the same time.  
+**Code Mantra** is a real-time collaborative code editor that enables multiple users to work together on the same code, in the same editor, at the same time.  
 It’s designed for **doubt resolution**, **pair programming**, **interview preparation**, and **team coding sessions**.  
 
 ---
