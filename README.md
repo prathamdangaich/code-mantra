@@ -29,14 +29,21 @@ It’s designed for **doubt resolution**, **pair programming**, **interview prep
 - Node.js  
 - Express.js  
 - Socket.IO  
-- HTTP Server  
-- Path module  
 
 ---
 ## By default:
 
 - **Backend** runs on [http://localhost:3000](http://localhost:3000)  
 - **Frontend** runs on [http://localhost:5173](http://localhost:5173) (Vite default)  
+
+---
+## 📸 Screenshot  
+
+![Code Mantra Screenshot](./frontend/image/ss1.png)  
+
+![Code Mantra Screenshot](./frontend/image/ss2.png)  
+
+![Code Mantra Screenshot](./frontend/image/ss3.png)
 
 ---
 
@@ -46,5 +53,19 @@ It’s designed for **doubt resolution**, **pair programming**, **interview prep
 2. Enter a **Room ID** and your **Name**, then click **Join Room**.  
 3. Share the Room ID with your friends/teammates.  
 4. Start coding together in real time!  
+
+---
+
+## Contributing
+
+Contributions and suggestions are welcome!  
+Please open an issue or submit a pull request.
+
+---
+
+## Author
+**Pratham Dangaich**
+<br>
+**GitHub:** [prathamdangaich](https://github.com/prathamdangaich)
 
 
